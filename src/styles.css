@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+
+/* Styles for the active tab label */
+.mat-tab-label-active {
+    min-width: 25px !important;
+    padding: 5px;
+    background-color: #3f51b5;
+    color: white;
+    font-weight: 700;
+}
+
+/*
+ .mat-cell {
+    text-align:center;
+   }
+
+   
+.mat-head-cell {
+    text-align:center;
+   } */
+
+
+body{
+    background-color: rgb(238,238,238)
+}

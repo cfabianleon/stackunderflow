@@ -1,0 +1,32 @@
+<div class="container">
+  <h2 mat-dialog-title>Actualizar Proyecto</h2>
+</div>
+
+<div class="container">
+  <form class="example-form" [formGroup]="proyectoForm">
+    <mat-form-field class="example-full-width">
+      <input type="text" formControlName="idControl" required matInput placeholder="WI del proyecto" #id>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input type="text" formControlName="nombreControl" required matInput placeholder="Nombre del proyecto" #nombre>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Consultores para Asignar" formControlName="recursoControl" [value]="selectedOption" #recurso>
+        <mat-option *ngFor="let recurso of misRecursos" [value]="recurso.value">
+          {{recurso.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <br>
+    <mat-dialog-actions>
+      &nbsp;
+      &nbsp;
+      <button [disabled]="!proyectoForm.valid" (click)='enviarDatos(id, nombre, recurso)' mat-stroked-button color="primary">Enviar</button>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <button mat-stroked-button color="primary" (click)="onNoClick()">Cancelar</button>
+    </mat-dialog-actions>
+  </form>
+</div>

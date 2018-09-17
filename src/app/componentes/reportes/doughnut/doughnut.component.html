@@ -1,0 +1,46 @@
+<mat-tab-group [selectedIndex]="selected.value"
+(selectedIndexChange)="selected.setValue($event)">
+        <mat-tab label="Distribución">
+            <h1 style = "text-align: center">Distribución de tareas por requerimiento</h1>
+            <div style="text-align: center" *ngIf="selected.value == 0">
+                <form class = "example-form">
+                <mat-form-field>
+                <mat-select placeholder="Elige un requerimiento" required #seleccion>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let requerimiento of listaRequerimientos" [value]="requerimiento" >
+                        {{requerimiento.TITULO_ATENCION}}
+                    </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;
+                &nbsp;
+                <button (click) = 'obtenerDatos(seleccion)'type="button" class="btn btn-primary">Reporte</button>
+                <!-- <button (click) = 'obtenerDatos(seleccion)' mat-stroked-button color="primary">Obtener reporte</button> -->
+                </form>
+            </div>
+            <mat-spinner class="row" *ngIf="doughnutChartData.length < 3 && !primeraVez"></mat-spinner>
+            <div style="text-align: center">
+                <div style="display: block" class="row"> 
+                
+                    <div style="display: block">
+                        <canvas baseChart *ngIf="doughnutChartData.length > 3"
+                                    [data]="doughnutChartData"
+                                    [labels]="doughnutChartLabels"
+                                    [chartType]="doughnutChartType"
+                                    [options]="doughnutChartOptions"
+                                    (chartHover)="chartHovered($event)"
+                                    (chartClick)="chartClicked($event)"></canvas>
+                        </div> 
+                </div>
+                </div>
+        </mat-tab>
+        <mat-tab label="Tabla Costos"> 
+            <app-tabla-costos *ngIf="selected.value == 1"></app-tabla-costos>
+        </mat-tab>
+        <mat-tab label="Auditoria">
+            <app-auditoria *ngIf="selected.value == 2"></app-auditoria>
+        </mat-tab>
+        <mat-tab label="Forecast vs claim">
+            <app-excel-to-json ></app-excel-to-json>
+        </mat-tab>
+</mat-tab-group>

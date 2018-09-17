@@ -1,0 +1,121 @@
+<app-header></app-header>
+<mat-sidenav-container class="sidebar">
+
+    <mat-sidenav mode="side" class="sidesize" opened>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Recientes
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['reciente']">Recientes</a>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Cliente
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['clientes']">Ver Clientes</a>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Proyectos
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['proyectos']">Obtener</a>
+            <mat-divider></mat-divider>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Lineas
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['lineas']">Obtener</a>
+            <mat-divider></mat-divider>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Recursos
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['recursos']">Ver Recursos</a>
+            <mat-divider></mat-divider>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Atencion
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['requerimiento']">requerimientos</a>
+            <mat-divider></mat-divider>
+
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Tareas
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['tarea']">Tareas</a>
+            <mat-divider></mat-divider>
+        </mat-expansion-panel>
+
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Aplicacion
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['aplicacion']">Aplicacion</a>
+            <mat-divider></mat-divider>
+        </mat-expansion-panel>
+        <mat-divider></mat-divider>
+
+        <mat-expansion-panel class="dark" *ngIf="!login.soyGerente()">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="dark">
+                    Reportes
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a [routerLink]="['reporte/requerimientos']">Reportes</a>
+            <br>
+            <!-- <a [routerLink] ="['reporte/datos-aplicacion']">Datos aplicaciones</a> 
+                    <br>
+                    <a [routerLink] ="['reporte/auditoria']">Auditoria</a> -->
+            <mat-divider></mat-divider>
+        </mat-expansion-panel>
+
+
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

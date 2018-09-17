@@ -1,0 +1,35 @@
+.example-icon {
+    padding: 0 14px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  .sidebar {
+    position: absolute;
+    top: 63px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+  }
+
+  .sidesize{
+    width: 200px;
+    background-color: #343a40;
+    color: white;
+  }
+
+  .dark{
+    background-color: #434b53;
+    color: white;
+  }
+
+  .active{
+    color: aqua;
+  }
+
+  a{
+    text-decoration: none;
+  }

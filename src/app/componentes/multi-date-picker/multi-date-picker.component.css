@@ -1,0 +1,80 @@
+.custom-day {
+    text-align: center;
+    padding: 0.185rem 0.25rem;
+    display: inline-block;
+    height: 2rem;
+    width: 2rem;
+}
+
+.custom-day.range,
+.custom-day:hover {
+    background-color: rgb(2, 117, 216);
+    color: white;
+}
+
+.custom-day.faded {
+    background-color: rgba(2, 117, 216, 0.5);
+}
+
+.custom-day.selected {
+    background-color: rgba(255, 255, 0, .5);
+}
+
+.ngb-datepicker {
+    display: inline-block;
+}
+
+.row {
+    justify-content: center;
+}
+
+table {
+    /* border: 1px solid grey; */
+    border: 0.5px solid #ced9d9;
+    border-radius: 6px;
+}
+
+thead {
+    background: white;
+}
+
+th,
+td {
+    border: 0.5px solid #ced9d9;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.calendario {
+    float: left;
+}
+
+.boton {
+    text-align: center;
+    
+}
+
+.boton button{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+
+
+h3 {
+    text-align: center;
+    color: blue;
+
+}
+
+.titulos{
+    display: inline-block;
+}

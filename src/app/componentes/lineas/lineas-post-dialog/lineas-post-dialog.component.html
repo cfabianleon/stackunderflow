@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Crear linea</h1>
+
+<div mat-dialog-content>
+  <form class="crearLineaForm" [formGroup] = "crearLineaForm" >
+
+
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Nombre Linea" formControlName="nombre_linea" #nombre required>
+    </mat-form-field>
+  
+    <mat-form-field class="example-full-width">
+      <input input type = "number" matInput placeholder="Costo Linea" formControlName="costo_linea" #costo required>
+    </mat-form-field>
+
+    <mat-select placeholder="Wi proyecto" formControlName="wi" required #wi>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let proyecto of listaProyectos" [value]="proyecto">
+          {{proyecto.ID_PROYECTO}}
+        </mat-option>
+    </mat-select>
+
+  </form>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-raised-button [disabled]="!crearLineaForm.valid" (click)= 'enviarDatosCrear(nombre,costo,wi)'>Crear</button>
+    <button mat-raised-button (click)= 'onNoClick()'>Cancelar</button>
+
+</div>

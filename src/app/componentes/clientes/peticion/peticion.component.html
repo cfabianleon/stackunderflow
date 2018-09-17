@@ -1,0 +1,65 @@
+<div>
+  <h1 class="text-center">Registrar Ticket</h1>
+</div>
+<div class="text-center container">
+  <form class="ticketForm" [formGroup]="peticionForm">
+      <div class="row">
+          <mat-form-field>
+              <input matInput placeholder="Titulo" formControlName="titulo_atencion" required >
+          </mat-form-field>
+          <mat-form-field>
+              <input matInput placeholder="Nombre Cliente" formControlName="id_cliente_atencion" readonly required >
+          </mat-form-field>
+          <mat-form-field>
+                <mat-select placeholder="Elige el Proyecto" formControlName="proyectoN" required >
+                    <mat-option *ngFor="let proyectos of listaProyectos" [value]="proyectos.ID_PROYECTO" (click)="lineasProyecto(proyectos.ID_PROYECTO)">
+                        {{proyectos.NOMBRE_PROYECTO}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+      </div>
+      <div class="row">
+            <mat-form-field [hidden]="!cProyecto()">
+                <mat-select placeholder="Elige linea de servicio" formControlName="lineaN" required >
+                    <mat-option *ngFor="let linea_servicio of linProyecto" [value]="linea_servicio.NOMBRE_LINEA" (click)="aplicacionesLneasP(linea_servicio.ID_LINEA_SERVICIO)">
+                        {{linea_servicio.NOMBRE_LINEA}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field [hidden]="!cLServicio()">
+                <mat-select placeholder="Elige aplicacion" width="'60%'" formControlName="aplicacionN" required >
+                    <mat-option *ngFor="let aplicacion of aplicacionP" [value]="aplicacion.ID_APLICACION">
+                        {{aplicacion.APLICACION}}
+                    </mat-option>
+                </mat-select>                   
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Tipo de atencion" formControlName="tipo_atencion" required>
+                    <mat-option value="Requerimiento">Requerimiento</mat-option>
+                    <mat-option value="Soporte">Soporte</mat-option>
+                    <mat-option value="Incidencia">Incidencias</mat-option>
+                    <mat-option value="Defectos">Defectos</mat-option>
+                </mat-select>
+            </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha esperada" formControlName="fechaEsp" required >
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+      <div class="row">
+          <mat-form-field class="textarea">
+              <textarea matInput placeholder="Descripcion" formControlName="descripcion_atencion" required ></textarea>
+          </mat-form-field>
+          <div class="actions row">
+              <div>
+                  <input id="file"type="file" (change)="onFileSelected($event)" required>
+              </div>
+              <div>
+                <button mat-raised-button [disabled]="!centinel()" (click)="enviar()"color="primary">Enviar</button>
+                <mat-progress-bar [hidden]="!progress()" mode="determinate" [value]="carga"></mat-progress-bar>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>

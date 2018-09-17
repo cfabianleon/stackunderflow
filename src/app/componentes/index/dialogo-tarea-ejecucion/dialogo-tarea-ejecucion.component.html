@@ -1,0 +1,46 @@
+<div>
+    <h1 class="text-center">EJECUCIONES TAREA {{ tareas.ID_TAREA }}</h1>
+</div>
+
+<div class="card card-default">
+    <div id="collapse1" class="collapse show">
+        <div class="card-body">
+            <mat-dialog-content class="example-container">
+
+            <table mat-table [dataSource]="dataSource" matSort >
+                <ng-container matColumnDef="NUM_HORAS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Numero Horas </th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <input type="number" id="num_horas_{{element.ID_EJECUCION}}" value="{{element.NUM_HORAS.replace(',','.')}}" />
+                    </td>
+
+                </ng-container>
+                <ng-container matColumnDef="FECHA_REGISTRO">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </th>
+                    <td mat-cell *matCellDef="let element"> &nbsp;{{element.FECHA_REGISTRO | date : 'MMM d, y'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="OBS_EJECUCION">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Observaciones </th>
+                    <td mat-cell *matCellDef="let element">
+                        <input type="text" id="obs_{{element.ID_EJECUCION}}" value="{{element.OBS_EJECUCION}}" />
+                      </td>
+                </ng-container>
+
+               <ng-container matColumnDef="OPCIONES">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="edit(element.ID_EJECUCION)" color="primary">
+                              <mat-icon>
+                                edit
+                              </mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+           </table>
+           </mat-dialog-content>
+        </div>
+    </div>
+</div>

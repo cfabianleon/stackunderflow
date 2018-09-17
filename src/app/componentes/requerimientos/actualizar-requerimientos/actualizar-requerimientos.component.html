@@ -1,0 +1,98 @@
+<!-- <h2 mat-dialog-title>Actualizar atencion</h2>
+<mat-dialog-content class="example-container">
+    <form class="recursoForm" [formGroup]="consultorForm">
+        <mat-form-field>
+            <mat-select placeholder="Elige un proyecto" formControlName="proyectoN" required>
+                <mat-option *ngFor="let proyectos of listaProyectos" [value]="proyectos.ID_PROYECTO" (click)="lineasProyecto(proyectos.ID_PROYECTO)">
+                    {{proyectos.NOMBRE_PROYECTO}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <mat-select placeholder="Elige linea de servicio" formControlName="lineaN" required>
+                <mat-option *ngFor="let linea_servicio of linProyecto" [value]="linea_servicio.NOMBRE_LINEA" (click)="aplicacionesLneasP(linea_servicio.ID_LINEA_SERVICIO)">
+                    {{linea_servicio.NOMBRE_LINEA}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <mat-select placeholder="Elige aplicacion" width="'60%'" formControlName="aplicacionN" required>
+                <mat-option *ngFor="let aplicacion of aplicacionP" [value]="aplicacion.ID_APLICACION" (click)="requerimientoAplicacionP(aplicacion.ID_APLICACION)">
+                    {{aplicacion.APLICACION}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <mat-select placeholder="Elige un requerimiento" width="'60%'" formControlName="requerimientoN" required #requerimientoN>
+                <mat-option *ngFor="let requerimiento of requerimientoP" [value]="requerimiento.ID_ATENCION">
+                    {{requerimiento.TITULO_ATENCION}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <mat-select placeholder="Tipo de atencion" formControlName="tipo_atencion" required #tipo>
+                <mat-option value="Requerimiento">Requerimiento</mat-option>
+                <mat-option value="Soporte">Soporte</mat-option>
+                <mat-option value="Incidencia">Incidencias</mat-option>
+                <mat-option value="Defectos">Defectos</mat-option>
+            </mat-select>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <input matInput placeholder="titulo" formControlName="titulo_atencion" required #titulo>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <textarea matInput placeholder="descripcion" formControlName="descripcion_atencion" required #descripcion></textarea>
+        </mat-form-field>
+        &nbsp;&nbsp;
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha esperada" formControlName="fechaEsp" required #fechaEsp>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button (click)='actualizarAtencion(requerimientoN, descripcion, titulo, tipo, fechaEsp)'>Actualizar</button>
+    <button mat-raised-button (click)='close()'>Cancelar</button>
+</mat-dialog-actions> -->
+
+<h2 mat-dialog-title>Actualizar Atencion</h2>
+
+<mat-dialog-content class="example-container">
+  <form class="recursoForm" [formGroup]="consultorForm">    
+      <mat-form-field>
+        <input matInput placeholder="Titulo" formControlName="titulo_atencion" required>
+      </mat-form-field>
+      &nbsp;&nbsp;
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Fecha esperada" formControlName="fechaEsp" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+      &nbsp;
+      <mat-form-field>
+        <input matInput placeholder="Descripcion" formControlName="descripcion_atencion" required> 
+      </mat-form-field>
+      &nbsp;
+      <mat-form-field>
+        <mat-select placeholder="Tipo de atencion" formControlName="tipo_atencion" required #tipo>
+            <mat-option value="Requerimiento">Requerimiento</mat-option>
+            <mat-option value="Soporte">Soporte</mat-option>
+            <mat-option value="Incidencia">Incidencias</mat-option>
+            <mat-option value="Defectos">Defectos</mat-option>
+        </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button [disabled]="!consultorForm.valid" (click)="actualizarAtencion()">Save</button>
+  <button mat-raised-button (click)="close()">Cancel</button>
+</mat-dialog-actions>

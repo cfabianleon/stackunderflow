@@ -1,0 +1,93 @@
+.disable-click {
+    pointer-events: none;
+}
+
+.row {
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+
+h3 {
+    text-align: right;
+    font-size: 2.5rem;
+}
+
+h4 {
+    text-align: center;
+    color: blue;
+}
+
+.container button {
+    margin: 20px;
+}
+
+.container{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.centrar{
+    text-align: center;
+    margin-inline-start: 7px;
+    margin-inline-end: 7px;
+    margin-bottom: 7px;
+}
+
+#alldates{
+    text-align: center;
+    margin-top: 10px;
+    width: 39%;
+    justify-content: center;
+}
+
+
+table {
+    width: 100%;
+}
+
+.positive {
+    background-color: #33a532;
+    /* border: 10px solid green; */
+    display: inline-block;   
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding-top: 1em;
+
+  }
+  
+  .negative {
+    background-color: rgb(255, 0, 0);
+    /* border: 10px solid green; */
+    display: inline-block;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding-top: 1em;
+   }
+
+  .neutral{
+   background-color: #FFBE00;
+   /* border: 10px solid green; */
+   display: inline-block;
+   border-radius: 50%;
+   width: 50px;
+   height: 50px;
+   padding-top: 1em;
+
+  }
+
+  .mat-form-field{
+      margin-left: 0.5em;
+      margin-right: 0.5em;
+  }
+
+   ::ng-deep .mat-sort-header-container{
+    display: flex;
+    justify-content: center;
+  }

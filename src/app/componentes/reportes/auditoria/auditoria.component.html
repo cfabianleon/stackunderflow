@@ -1,0 +1,63 @@
+<h1 style = "text-align: center">Auditoría</h1>
+<br>
+<div style="width: 80%;text-align: rigt;margin-left:10%">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+  </mat-form-field>
+</div>
+
+<!-- <div class="materia mat-elevation-z8"> -->
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="NOMBRE_USUARIO">
+    <th mat-header-cell *matHeaderCellDef  mat-sort-header>Nombre</th>
+    <td mat-cell *matCellDef="let element" > {{element.NOMBRE_USUARIO }} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="FECHA_HORA" >
+    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Fecha </th>
+    <td mat-cell *matCellDef="let element"> {{element.FECHA_HORA | date : 'MMM d, y, h:mm a'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ANTES" >
+    <th mat-header-cell *matHeaderCellDef > Antes </th>
+    <td mat-cell *matCellDef="let element" > 
+        <div *ngIf='element.DESPUES.split("-").length != 4'>{{element.ANTES}}</div> 
+        <div *ngIf='element.DESPUES.split("-").length == 4'>{{element.ANTES | date : 'MMM d, y'}}</div>    
+    </td>
+  </ng-container>
+
+  <ng-container class="Despues" matColumnDef="DESPUES">
+    <th class="despues" mat-header-cell *matHeaderCellDef >  Despues </th>
+    <td mat-cell *matCellDef="let element" >
+        <div *ngIf='element.DESPUES.split("-").length != 4'>{{element.DESPUES}}</div> 
+        <div *ngIf='element.DESPUES.split("-").length == 4' i18n>{{element.DESPUES.substring(0,10) | date : 'MMM d, y'}}</div> 
+
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="TABLA">
+    <th mat-header-cell *matHeaderCellDef  mat-sort-header style=" text-align: center"> Tabla </th>
+    <td mat-cell *matCellDef="let element" > {{element.TABLA}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ACCION">
+    <th mat-header-cell *matHeaderCellDef  mat-sort-header> Acción</th>
+    <td mat-cell *matCellDef="let element" > {{element.ACCION}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="COLUMNA">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header > Columna </th>
+    <td mat-cell *matCellDef="let element"> {{element.COLUMNA}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+</table>
+<mat-paginator class="mat-elevation-z8"[pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+

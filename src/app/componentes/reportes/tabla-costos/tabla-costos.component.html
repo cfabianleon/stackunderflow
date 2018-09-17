@@ -1,0 +1,39 @@
+<h1 style = "text-align: center">Costo de los requerimientos terminados</h1>
+<br>
+<div style="width: 80%;text-align: rigt;margin-left:10%">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+  </mat-form-field>
+</div>
+
+  <button class="flotante" matTooltip="Descargar excel" (click)="exportarExcel()"><i class="fa fa-file-excel-o" style="font-size:48px;color:green"></i></button>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  <!-- Position Column -->
+  <ng-container matColumnDef="Aplicacion">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Aplicación</th>
+    <td mat-cell *matCellDef="let element"> {{element.APLICACION}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Tipo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+    <td mat-cell *matCellDef="let element"> {{element.TIPO}} </td>
+    </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="Titulo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Título </th>
+    <td mat-cell *matCellDef="let element"> {{element.TITULO }} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="Costo">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
+    <td mat-cell *matCellDef="let element"> {{element.COSTO  | currency:'COP':'symbol-narrow'}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator class="mat-elevation-z8"[pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>

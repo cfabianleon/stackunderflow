@@ -1,0 +1,36 @@
+<h1 mat-dialog-title>Crear cliente</h1>
+
+
+<div mat-dialog-content>
+  <form class="crearClientePutForm" [formGroup]="crearClientePutForm">
+
+    <mat-form-field>
+      <input type="number" matInput placeholder="id cliente" formControlName="id_cliente" #id>
+    </mat-form-field>
+
+    <mat-form-field>
+      <!-- {{data | json}} -->
+      <input matInput placeholder="Nombre del cliente" name='nombre_cliente' formControlName="nombre_cliente" #nombre>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Usuario" name='usuario_cliente' formControlName="usuario" #usuari0>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="password" placeholder="Password Cliente" name='password_cliente' formControlName="password"
+        #password>
+    </mat-form-field>
+
+    <br>
+    <!-- <button (click)="enviarDatosActualizar(id,nombre)">Guardar</button> -->
+  </form>
+</div>
+
+<div mat-dialog-actions>
+
+  <!-- <button mat-button (click)="onNoClick()">Salir</button> -->
+  <button mat-raised-button [disabled]="!crearClientePutForm.valid" (click)='enviarDatosActualizar(id,nombre, usuario, password )'>Actualizar</button>
+  <button mat-raised-button (click)='onNoClick()'>Cancelar</button>
+
+</div>

@@ -1,0 +1,59 @@
+<!-- <p>Example of multi-date-picker</p>
+<p>If you want to select a range, use Ctrl Key</p>
+<ngb-multi-date-picker [datesSelected]="datesSelected" (datesSelectedChange)="change($event)"></ngb-multi-date-picker>
+
+<hr>
+
+<pre>DateSelected: {{ datesSelected | json }} </pre> -->
+
+
+
+<h1 mat-dialog-title>Calendario Claim</h1>
+       
+<h3 mat-dialog-title>Fechas Seleccionadas : {{datesSize | number}} </h3>
+
+<div class="calendario">
+    <ngb-datepicker #dp [displayMonths]="2" [dayTemplate]="t">
+    </ngb-datepicker>
+
+    <ng-template #t let-date="date" let-focused="focused">
+        <span class="custom-day" (click)="onDateSelection($event,date)" [class.focused]="focused" [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)" [class.faded]="isHovered(date) || isInside(date)" [class.selected]="isDateSelected(date)"
+            (mouseenter)="hoveredDate = date" (mouseleave)="hoveredDate = null">
+    {{ date.day }}
+  </span>
+    </ng-template>
+    <div class="boton">
+        <button mat-raised-button (click)='limpiar()'>Limpiar</button>
+        <button mat-raised-button color="primary" (click)="mostrar()" [disabled]="datesSize != 13">Enviar</button>
+    </div>
+</div>
+
+
+
+
+
+<div class="tabla">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Dia</th>
+                        <th scope="col">Mes</th>
+                        <th scope="col">Año</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let data of dataSource">
+                    <tr>
+                        <td>{{data.day}}</td>
+                        <td>{{data.month}}</td>
+                        <td>{{data.year}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,10 @@
+<mat-toolbar class="toolbar">
+  <mat-toolbar-row>
+    <span> STACKUNDERFLOW </span>
+    <span class="example-spacer"></span>
+    <button *ngIf="!sesionIniciada()" (click)='irLogin()'
+            mat-stroked-button color="primary">Iniciar Sesion</button>
+    <button *ngIf="sesionIniciada()" (click)='logout()'
+            mat-stroked-button color="primary">Cerrar Sesion</button>
+  </mat-toolbar-row>
+</mat-toolbar>

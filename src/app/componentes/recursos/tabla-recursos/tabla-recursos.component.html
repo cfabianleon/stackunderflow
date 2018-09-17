@@ -1,0 +1,60 @@
+<div>
+    <h1 class="text-center">RECURSOS</h1>
+</div>
+
+<div style="width: 80%;text-align: rigt;margin-left:10%">
+    <mat-form-field class="filtro">
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div *ngIf="yaCargo()"class="table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+        <!-- Position Column -->
+        <ng-container matColumnDef="ID_CONSULTOR">
+            <th mat-header-cell *matHeaderCellDef> Id. </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID_CONSULTOR}} </td>
+        </ng-container>
+        
+        <!-- Name Column -->
+        <ng-container matColumnDef="NOMBRE_CONSULTOR">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.NOMBRE_CONSULTOR}} </td>
+        </ng-container>
+        
+        <!-- Weight Column -->
+        <ng-container matColumnDef="BLUEPAGE">
+            <th mat-header-cell *matHeaderCellDef> Bluepage </th>
+            <td mat-cell *matCellDef="let element"> <a href="#" target="_blank">{{element.BLUEPAGE}}</a></td>
+        </ng-container>
+        
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="ID_EST_CONSULTOR">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.NOMBRE_EST_CONSULTOR}} </td>
+        </ng-container>
+        
+        <!-- Symbol Colum-->
+        <ng-container matColumnDef="OPCIONES">
+            <th mat-header-cell *matHeaderCellDef> Opciones </th>
+            <td mat-cell *matCellDef="let element"><app-dialogo-put-recurso *ngIf = "seguridad.quienSoy( element.ID_CONSULTOR ) || !seguridad.soyGerente( )"
+                                                    [consultor]="element"></app-dialogo-put-recurso></td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>    
+    <mat-paginator class="mat-elevation-z8"[pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>         
+</div>
+<div *ngIf="!yaCargo()">
+    <mat-spinner class="centrar"></mat-spinner>
+</div>
+<div *ngIf="!seguridad.soyGerente()" 
+    style="float: right">
+    <app-dialogo-post-recurso></app-dialogo-post-recurso>
+</div>

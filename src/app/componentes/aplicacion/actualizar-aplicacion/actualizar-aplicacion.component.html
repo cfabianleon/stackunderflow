@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Actualizar Aplicación</h2>
+
+<mat-dialog-content class="example-container">
+  <form class="aplicacionForm" [formGroup]="aplicacionForm">
+      <mat-form-field>
+        <input matInput placeholder="Id." formControlName="id" required>
+      </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput placeholder="Nombre" formControlName="nombre_aplicacion" required>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput placeholder="Servicio" formControlName="servicio" required>
+      </mat-form-field>
+      
+      <mat-form-field >
+        <input matInput placeholder="Responsable" formControlName="responsable"  required>
+      </mat-form-field>      
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button [disabled]="!aplicacionForm.valid" (click)="save()">Save</button>
+</mat-dialog-actions>

@@ -1,0 +1,9 @@
+                <mat-form-field>
+                    <mat-select placeholder="Elige una tarea"[formControl]="id_tarea" required #idTarea>
+                        <mat-option *ngFor="let tareas of tareas" [value]="tareas.ID_TAREA">
+                            {{tareas.ID_TAREA}}, {{tareas.DESC_TAREA}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                    <button (click)= 'finalizarTarea(idTarea)' class="btn btn-primary">Finalizar Tarea</button>
+                    <button (click)= 'close()' class="btn btn-primary">Finalizar Tarea</button>

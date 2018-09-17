@@ -1,0 +1,22 @@
+<div class="row">
+  <button mat-icon-button (click)="openDialogActualizar()" color="primary" matTooltip = "Editar">
+    <mat-icon>
+      edit
+    </mat-icon>
+  </button>
+  <button mat-icon-button (click)="changeState()" color="primary" matTooltip="Reactivar atención">
+    <mat-icon>
+      check
+    </mat-icon>
+  </button>
+  <button mat-icon-button color="primary" (click)="verDescripcion()" matTooltip="Descripcion de la atencion">
+      <mat-icon>
+        note
+      </mat-icon>
+  </button>
+  <button mat-icon-button color="primary" matTooltip="Archivo Adjunto" *ngIf="hayUrl()" (click)="download()">
+    <mat-icon>
+      attach_file
+    </mat-icon>
+  </button>
+</div>

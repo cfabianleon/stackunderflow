@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Nueva Ejecucion</h2>
+<mat-dialog-content class="example-container">
+  <form class="recursoforms"  [formGroup]="ejecucionForm">
+    <mat-form-field>
+      <mat-select placeholder = "Proyecto" required #proye formControlName="fProyecto"
+       [disabled] = "!eProyecto">
+        <mat-option (click)="selectProyecto(proye)"  *ngFor='let proyecto of proyectos' 
+        [value]= "proyecto">
+        {{proyecto.NOMBRE_PROYECTO}}</mat-option> 
+      </mat-select>
+    </mat-form-field>
+    <p></p>
+    <mat-form-field>
+        <mat-select placeholder = "Aplicacion" required #idapp  formControlName="fAplicacion"
+        [disabled] = "!eAplicacion" >
+          <mat-option  (click) ="selectAplicacion(idapp)"*ngFor='let aplicacion of aplicaciones' 
+          [value] = "aplicacion"> {{aplicacion.APLICACION}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <p></p>
+    <mat-form-field>
+        <mat-select placeholder = "Atencion"  required #idatencion  formControlName="fAtencion" 
+        [disabled] ="!eAtencion">
+          <mat-option (click)="selectAtencion(idatencion)"  *ngFor='let atencion of atenciones'
+           [value] = "atencion" [hidden]="atencion.ESTADO=='Finalizada'">
+              {{atencion.TITULO_ATENCION}}
+            </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <p></p>
+    <mat-form-field>
+        <mat-select placeholder="Tarea" required #idtarea  formControlName="fTarea" [disabled] ="!eTarea"> 
+          <mat-option  *ngFor='let tarea of tareas' [value] = "tarea" [hidden]="tarea.ID_CONSULTOR_TAREA!=miId">
+             {{tarea.DESC_TAREA}}
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="fecha" formControlName="fFecha" required #fecha > 
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput type="text" placeholder="horas" formControlName="fHoras" required #hora>  
+    </mat-form-field>
+   <mat-form-field>
+      <input matInput type="text" placeholder="observaciones" formControlName="fObser" required #obser >
+   </mat-form-field> 
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-raised-button (click)= 'registrar(hora,obser,idtarea)'>Registrar</button>
+    <button mat-raised-button (click)= 'cancelar()'>Cancelar</button>
+    <button mat-raised-button (click)= 'limpiar()'>Limpiar</button>
+</mat-dialog-actions>

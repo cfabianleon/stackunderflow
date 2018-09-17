@@ -1,0 +1,321 @@
+<div class="container" *ngIf="fechasCompletas && !archivosSubidos">
+
+        <button  class = "calendario" mat-stroked-button color="primary" (click)="cargarCalendario(false)"  >
+                <mat-icon>
+                    keyboard_backspace
+                </mat-icon>
+        </button>      
+    <p> 
+        Suba el archivo de forecast
+    </p>
+
+
+    <form #fileSelect>
+        <input type="file" (change)="onFileSelected($event)" accept=".xls, .xlsx" [ngClass]="{'disable-click' : !botonHabilitado}">
+    </form>
+    <br>
+    <p>
+        Suba el archivo de claim
+    </p>
+    <form #fileSelect2>
+        <input type="file" (change)="onFileSelected2($event)" accept=".xls, .xlsx" [ngClass]="{'disable-click' : !botonHabilitado2 || botonHabilitado}">
+    </form>
+    <br>
+    <button mat-stroked-button color="primary" (click)="subirArchivos(true)" [disabled] = "botonHabilitado || botonHabilitado2">Subir Archivos</button>
+    <button mat-stroked-button color="primary" (click)="reset()" >Limpiar</button>
+</div>
+
+<div class="container" *ngIf="archivosSubidos">
+        <button  class = "calendario" mat-stroked-button color="primary" (click)="subirArchivos(false) " >
+                <mat-icon>
+                    keyboard_backspace
+                </mat-icon>
+        </button>   
+
+    <form [formGroup]="consultorForm">
+        <mat-form-field>
+            <mat-select placeholder="Elija el contrato" formControlName="contratoControl" required #selection>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let contrato of contratos" [value]="contrato" (click)=cargarWi(contrato)>
+                    {{contrato}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!consultorForm.valid">Elija un contrato</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-select placeholder="Elija el WI" formControlName="wiControl" required #selection>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let wi of listaWi" [value]="wi" (click) = "cargarConsultores()">
+                    {{wi}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!consultorForm.valid">Elija un WI</mat-error>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="mostrarGrafica">
+            <mat-select placeholder="Elija el consultor" formControlName="consultorControl" required #selection>
+                <mat-option>--</mat-option>
+                <!-- <mat-option *ngFor="let consultor of data" [value]="consultor ">
+                    {{consultor['nombre consultor']}}
+                </mat-option> -->
+                <mat-option *ngFor="let consultor of listaConsultores" [value]="consultor ">
+                    <span matBadge="NF" matBadgeColor="warn" matBadgeOverlap="false" *ngIf="consultor.noForecast">{{consultor.nombre_consultor}}  </span> 
+                    <span *ngIf="!consultor.noForecast" >{{consultor.nombre_consultor}} </span>
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="!consultorForm.valid">Elija un consultor</mat-error>
+        </mat-form-field>
+
+        <button mat-stroked-button (click)="verGrafica()" [disabled]="mostrarGrafica">Gráfica</button>
+        <button mat-stroked-button (click)="verDashboard()" [disabled]="mostrarDashboard"> Dashboard </button>
+        <br>
+        <button mat-stroked-button *ngIf="mostrarGrafica" (click)="graficar()" [disabled]="!consultorForm.valid">Graficar</button>
+    </form>
+
+</div>
+
+<h2 mat-dialog-title *ngIf="cargarGrafica && consultorActual != 'default' && mostrarGrafica" style = "text-align: center">{{consultorActual.nombre_consultor}}</h2>
+
+<div class="row" *ngIf="cargarGrafica">
+ <div class="col-md-6">
+        <div style="display: block;">
+            <canvas baseChart width="400" height="400" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class ="container" *ngIf="!opcionSeleccionada">
+<h1 mat-dialog-tittle >Carga del calendario Claim</h1>
+<form [formGroup]="fechaForm">
+        <button mat-stroked-button color="primary" (click)="cargarCalendario(true)" [disabled] = "!fechaForm.valid" class = "centrar">Cargar calendario existente</button>
+        <mat-form-field class = "centrar">
+                <mat-select placeholder="Años guardados" formControlName="fechaControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let fecha of claimsCargados" [value]="fecha">
+                        {{fecha}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="!consultorForm.valid">Seleccione el año deseado</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-stroked-button color="primary" (click)="crearCalendario(true)" class = "centrar">Subir un nuevo calendario</button>     
+</form>
+</div>
+
+<div class = "container">
+        <button  class = "calendario" mat-stroked-button color="primary" (click)="crearCalendario(false)" *ngIf="!fechasCompletas && !calendarioCreado" >
+                <mat-icon>
+                    keyboard_backspace
+                </mat-icon>
+        </button>     
+        <app-multi-date-picker (messageEvent)="receiveMessage($event)" *ngIf="!fechasCompletas && !calendarioCreado"></app-multi-date-picker>
+</div>
+
+
+
+<div class="container" *ngIf="showAllDates" id="alldates">
+    <br>
+<h4>Fechas de cierre Calendario Claim</h4>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="Dates">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Mes/Dia/Año </th>
+            <td mat-cell *matCellDef="let element"> {{element | date: 'MMM d,y'}} </td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table> 
+      <mat-paginator class="mat-elevation-z8"[pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator> 
+
+</div>
+
+
+
+<div class="container" *ngIf="mostrarDashboard">
+    <mat-form-field>
+        <mat-select [(value)]="selected">
+            <mat-option value="0"> Quarter 1 </mat-option>
+            <mat-option value="1"> Quarter 2 </mat-option>
+            <mat-option value="2"> Quarter 3 </mat-option>
+            <mat-option value="3"> Quarter 4 </mat-option>
+        </mat-select>
+    </mat-form-field>
+              
+    <table mat-table [dataSource]="listaConsultores2" matSort class="mat-elevation-z8">
+        
+        <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id_consultor}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="consultor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Consultor </th>
+            <td mat-cell *matCellDef="let element" > 
+                <span matBadge="NF" matBadgeColor="warn" matBadgeOverlap="false" *ngIf="element.noForecast">{{element.nombre_consultor}}</span> 
+                <span *ngIf="!element.noForecast">{{element.nombre_consultor}}</span>
+            </td>
+
+        </ng-container>
+
+        <ng-container matColumnDef="forecast1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> proyectado 1 </th>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="selected == 0">
+                    {{element.horas[0].q1[0]}}
+                </div>
+                <div *ngIf="selected == 1">
+                    {{element.horas[0].q2[0]}}
+                </div>
+                <div *ngIf="selected == 2">
+                    {{element.horas[0].q3[0]}}
+                </div>
+                <div *ngIf="selected == 3">
+                    {{element.horas[0].q4[0]}}
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="claim1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> claim 1 </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="{'positive' : element.horas[0].q1[0] >= datos[element.id_consultor][0],
+             'negative' : element.horas[0].q1[0] < datos[element.id_consultor][0]}"> 
+                {{datos[element.id_consultor][0]}} </td>
+        </ng-container> -->
+
+        <ng-container matColumnDef="claim1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> claim 1 </th>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="selected == 0" [ngClass]="{
+                    'neutral' : element.horas[0].q1[0] > datos2[element.id_consultor][0].q1[0],
+                    'positive'  : element.horas[0].q1[0] == datos2[element.id_consultor][0].q1[0],
+                    'negative' : element.horas[0].q1[0] < datos2[element.id_consultor][0].q1[0]}">
+                    {{datos2[element.id_consultor][0].q1[0]}}
+                </div>
+                <div *ngIf="selected == 1" [ngClass]="{
+                    'neutral' : element.horas[0].q2[0] > datos2[element.id_consultor][0].q2[0],
+                    'positive'  : element.horas[0].q2[0] == datos2[element.id_consultor][0].q2[0],
+                    'negative' : element.horas[0].q2[0] < datos2[element.id_consultor][0].q2[0]}">
+                    {{datos2[element.id_consultor][0].q2[0]}}
+                </div>
+                <div *ngIf="selected == 2" [ngClass]="{
+                    'neutral' : element.horas[0].q3[0] > datos2[element.id_consultor][0].q3[0],
+                    'positive'  : element.horas[0].q3[0] == datos2[element.id_consultor][0].q3[0],
+                    'negative' : element.horas[0].q3[0] < datos2[element.id_consultor][0].q3[0]}">
+                    {{datos2[element.id_consultor][0].q3[0]}}
+                </div>
+                <div *ngIf="selected == 3" [ngClass]="{
+                    'neutral' : element.horas[0].q4[0] > datos2[element.id_consultor][0].q4[0],
+                    'positive'  : element.horas[0].q4[0] == datos2[element.id_consultor][0].q4[0],
+                    'negative' : element.horas[0].q4[0] < datos2[element.id_consultor][0].q4[0]}">
+                    {{datos2[element.id_consultor][0].q4[0]}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="forecast2">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> proyectado 2 </th>
+            <td mat-cell *matCellDef="let element">
+                <div *ngIf="selected == 0">
+                    {{element.horas[0].q1[1]}}
+                </div>
+                <div *ngIf="selected == 1">
+                    {{element.horas[0].q2[1]}}
+                </div>
+                <div *ngIf="selected == 2">
+                    {{element.horas[0].q3[1]}}
+                </div>
+                <div *ngIf="selected == 3">
+                    {{element.horas[0].q4[1]}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="claim2">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> claim 2 </th>
+            <td mat-cell *matCellDef="let element"> 
+                    <div *ngIf="selected == 0" [ngClass]="{
+                        'neutral' : element.horas[0].q1[1] > datos2[element.id_consultor][0].q1[1],
+                        'positive'  : element.horas[0].q1[1] == datos2[element.id_consultor][0].q1[1],
+                        'negative' : element.horas[0].q1[1] < datos2[element.id_consultor][0].q1[1]}">
+                        {{datos2[element.id_consultor][0].q1[1]}}
+                    </div>
+                    <div *ngIf="selected == 1" [ngClass]="{
+                        'neutral' : element.horas[0].q2[1] > datos2[element.id_consultor][0].q2[1],
+                        'positive'  : element.horas[0].q2[1] == datos2[element.id_consultor][0].q2[1],
+                        'negative' : element.horas[0].q2[1] < datos2[element.id_consultor][0].q2[1]}">
+                        {{datos2[element.id_consultor][0].q2[1]}}
+                    </div>
+                    <div *ngIf="selected == 2" [ngClass]="{
+                        'neutral' : element.horas[0].q3[1] > datos2[element.id_consultor][0].q3[1],
+                        'positive'  : element.horas[0].q3[1] == datos2[element.id_consultor][0].q3[1],
+                        'negative' : element.horas[0].q3[1] < datos2[element.id_consultor][0].q3[1]}">
+                        {{datos2[element.id_consultor][0].q3[1]}}
+                    </div>
+                    <div *ngIf="selected == 3" [ngClass]="{
+                        'neutral' : element.horas[0].q4[1] > datos2[element.id_consultor][0].q4[1],
+                        'positive'  : element.horas[0].q4[1] == datos2[element.id_consultor][0].q4[1],
+                        'negative' : element.horas[0].q4[1] < datos2[element.id_consultor][0].q4[1]}">
+                        {{datos2[element.id_consultor][0].q4[1]}}
+                    </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="forecast3">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> proyectado 3 </th>
+            <td mat-cell *matCellDef="let element" >
+                <div *ngIf="selected == 0">
+                    {{element.horas[0].q1[2]}}
+                </div>
+                <div *ngIf="selected == 1">
+                    {{element.horas[0].q2[2]}}
+                </div>
+                <div *ngIf="selected == 2">
+                    {{element.horas[0].q3[2]}}
+                </div>
+                <div *ngIf="selected == 3">
+                    {{element.horas[0].q4[2]}}
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="claim3">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> claim 3 </th>
+            <td mat-cell *matCellDef="let element"> 
+                    <div *ngIf="selected == 0" [ngClass]="{
+                        'neutral' : element.horas[0].q1[2] > datos2[element.id_consultor][0].q1[2],
+                        'positive'  : element.horas[0].q1[2] == datos2[element.id_consultor][0].q1[2],
+                        'negative' : element.horas[0].q1[2] < datos2[element.id_consultor][0].q1[2]}">
+                        {{datos2[element.id_consultor][0].q1[2]}}
+                    </div>
+                    <div *ngIf="selected == 1" [ngClass]="{
+                        'neutral' : element.horas[0].q2[2] > datos2[element.id_consultor][0].q2[2],
+                        'positive'  : element.horas[0].q2[2] == datos2[element.id_consultor][0].q2[2],
+                        'negative' : element.horas[0].q2[2] < datos2[element.id_consultor][0].q2[2]}">
+                        {{datos2[element.id_consultor][0].q2[2]}}
+                    </div>
+                    <div *ngIf="selected == 2" [ngClass]="{
+                        'neutral' : element.horas[0].q3[2] > datos2[element.id_consultor][0].q3[2],
+                        'positive'  : element.horas[0].q3[2] == datos2[element.id_consultor][0].q3[2],
+                        'negative' : element.horas[0].q3[2] < datos2[element.id_consultor][0].q3[2]}">
+                        {{datos2[element.id_consultor][0].q3[2]}}
+                    </div>
+                    <div *ngIf="selected == 3" [ngClass]="{
+                        'neutral' : element.horas[0].q4[2] > datos2[element.id_consultor][0].q4[2],
+                        'positive'  : element.horas[0].q4[2] == datos2[element.id_consultor][0].q4[2],
+                        'negative' : element.horas[0].q4[2] < datos2[element.id_consultor][0].q4[2]}">
+                        {{datos2[element.id_consultor][0].q4[2]}}
+                    </div> 
+            </td>
+        </ng-container>
+        
+
+        <tr mat-header-row *matHeaderRowDef="dashboard"></tr>
+        <tr mat-row *matRowDef="let row; columns: dashboard;"></tr>
+
+      </table> 
+
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+<button mat-icon-button color = "primary" (click) = 'openDialog()' matTooltip = "Editar">
+  <mat-icon>
+    edit
+  </mat-icon>
+</button>
+<button mat-icon-button color = "primary" (click) = 'finalizarTarea()' matTooltip="Finalizar tarea">
+    <mat-icon>
+      check
+    </mat-icon>
+  </button>
+  <button mat-icon-button color = "primary" (click) = 'stopperTarea()' matTooltip="Pausar o reaunudar tarea">
+    <mat-icon *ngIf="tareaEst === 'En ejecucion'">
+      pause_circle_filled
+    </mat-icon>
+    <mat-icon *ngIf="tareaEst === 'Stopper' || tareaEst === 'En planeacion'">
+      play_circle_filled
+    </mat-icon>
+    <mat-icon *ngIf="tareaEst === 'Finalizada'">
+      block
+    </mat-icon>
+  </button>
+</div>

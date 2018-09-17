@@ -1,0 +1,65 @@
+<div>
+    <H1 class="text-center">TAREAS</H1>
+</div>
+
+<div style="width: 80%;text-align: rigt;margin-left:10%">
+    <mat-form-field class="filtro">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div *ngIf="yaCargo()">
+    <table mat-table [dataSource]="api.dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="ID_TAREA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id. </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID_TAREA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="DESC_TAREA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.DESC_TAREA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="HORA_ESTIMADA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Horas Estimada </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center"> <a href="#" target="_blank">{{element.HORA_ESTIMADA}}</a></td>
+        </ng-container>
+        <ng-container matColumnDef="FECHA_FIN_TAREA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Finalizacion Tarea </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.FECHA_FIN_TAREA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="FECHA_FIN_PLANEADA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Finalizacion Planeada </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.FECHA_FIN_PLANEADA}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ESTADO">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{element.ESTADO}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ID_CONSULTOR_TAREA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Consultor encargado</th>
+            <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.NOMBRE_CONSULTOR}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ID_ATENCION_TAREA">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID de la atencion asociada </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center"> {{element.TITULO_ATENCION}} </td>
+        </ng-container>
+        <ng-container matColumnDef="OPCIONES">
+            <th mat-header-cell *matHeaderCellDef> Actualizar </th>
+            <td mat-cell *matCellDef="let element">
+                <app-dialogo-actualizar-tarea (messageEvent)="receiveMessage($event)" [tarea]="element"></app-dialogo-actualizar-tarea>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+    </table>
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<div *ngIf="!yaCargo()">
+    <mat-spinner class="centrar"></mat-spinner>
+</div>
+
+<div style="float: right">
+    <app-dialogo-registrar-tarea (messageEvent)="receiveMessage($event)"></app-dialogo-registrar-tarea>
+</div>

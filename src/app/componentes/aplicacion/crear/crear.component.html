@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Nueva Aplicacion</h2>
+
+<mat-dialog-content class="example-container">
+  <form class="recursoForm" [formGroup]="aplicacionForm">
+      <mat-form-field>
+        <input matInput placeholder="Nombre Aplicacion" formControlName="nombre_aplicacion" required>
+      </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput placeholder="Nombre del Responsable" formControlName="responsable" required>
+      </mat-form-field>
+      
+      <mat-form-field>
+          <mat-select placeholder="Elige el Proyecto" formControlName="proyecto" required >
+              <mat-option *ngFor="let proyectos of listaProyectos" [value]="proyectos.ID_PROYECTO" (click)="lineasProyecto(proyectos.ID_PROYECTO)"  >
+                  {{proyectos.NOMBRE_PROYECTO}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>                  
+      <mat-form-field>
+           <mat-select placeholder="Elige linea de Servicio" formControlName="servicio" required >
+              <mat-option *ngFor="let linea_servicio of linProyecto" [value]="linea_servicio.ID_LINEA_SERVICIO">
+                   {{linea_servicio.NOMBRE_LINEA}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button [disabled]="!aplicacionForm.valid" (click)="save()">Save</button>
+</mat-dialog-actions>

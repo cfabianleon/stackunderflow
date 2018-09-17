@@ -1,0 +1,24 @@
+<h2 mat-dialog-title> Nueva Ejecucion </h2>
+
+<mat-dialog-content class="example-container">
+  <form class="recursoForm" [formGroup]="ejecucionForm">
+  
+      <mat-form-field>
+        <input matInput placeholder=" Tarea " value="{{ tarea.ID_TAREA }}" disabled="true">
+      </mat-form-field>
+       &nbsp;&nbsp; 
+      <mat-form-field>
+        <input matInput type="number" placeholder="Numero de Horas" formControlName="num_horas" required>
+      </mat-form-field>
+    	<br>
+      <mat-form-field>
+        <input matInput placeholder="Observaciones" formControlName="obs_ejecucion" required>
+      </mat-form-field>
+            
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button [disabled]="!ejecucionForm.valid" (click)="save()">Save</button>
+</mat-dialog-actions>

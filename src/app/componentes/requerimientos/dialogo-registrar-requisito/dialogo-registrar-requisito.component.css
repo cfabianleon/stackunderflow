@@ -1,0 +1,12 @@
+
+
+button.crear {
+    width: 90px;
+    height: 90px;
+}
+
+#registrarR {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+}

@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Nuevo Recurso</h2>
+
+<mat-dialog-content class="example-container">
+  <form class="recursoForm" [formGroup]="consultorForm">
+      <mat-form-field>
+        <input matInput placeholder="Id." formControlName="id_consultor" required>
+      </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput placeholder="Nombre del Recurso" formControlName="nombre_consultor" required>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput placeholder="Bluepage" formControlName="bluepage" required>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput placeholder="Banda del Recurso" formControlName="banda_consultor" required>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput type="number" Costo por hora formControlName="costo_hora" required> 
+        <span matPrefix>$&nbsp;</span>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-select placeholder="Seleccionar rol" formControlName="rol" required>
+          <mat-option value="GERENTE">
+            Gerente</mat-option>
+            <mat-option value="CONSULTOR">
+              Consultor</mat-option>
+            </mat-select>
+          </mat-form-field>
+          
+          <mat-form-field>
+            <input matInput type="email" placeholder="Correo Electronico" formControlName="correo" required>
+          </mat-form-field>
+    
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" formControlName="password" required>
+      </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Cancel</button>
+  <button mat-raised-button [disabled]="!consultorForm.valid" (click)="save()">Save</button>
+</mat-dialog-actions>

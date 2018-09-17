@@ -1,0 +1,88 @@
+<div>
+    <h1 class="text-center">
+        Tareas Recientes
+    </h1>
+</div>
+<div>
+    <div style="width: 80%;text-align: rigt;margin-left:10%">
+        <mat-form-field class="filtro">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="NOMBRE_CLIENTE">
+            <th mat-header-cell *matHeaderCellDef> CLIENTE </th>
+            <td mat-cell *matCellDef="let element"> {{element.NOMBRE_CLIENTE}} </td>
+        </ng-container>
+        <ng-container matColumnDef="ID_PROYECTO">
+            <th mat-header-cell *matHeaderCellDef> WI </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID_PROYECTO}} </td>
+        </ng-container>
+        <ng-container matColumnDef="NOMBRE_PROYECTO">
+            <th mat-header-cell *matHeaderCellDef> NOMBRE PROYECTO </th>
+            <td mat-cell *matCellDef="let element"> {{element.NOMBRE_PROYECTO}} </td>
+        </ng-container>
+        <ng-container matColumnDef="APLICACION">
+            <th mat-header-cell *matHeaderCellDef> APLICACION </th>
+            <td mat-cell *matCellDef="let element"> {{element.APLICACION}} </td>
+        </ng-container>
+        <ng-container matColumnDef="TITULO_ATENCION">
+            <th mat-header-cell *matHeaderCellDef> REQUERIMIENTO </th>
+            <td mat-cell *matCellDef="let element"> {{element.TITULO_ATENCION}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ID_CONSULTOR">
+            <th mat-header-cell *matHeaderCellDef> CONSULTOR </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID_CONSULTOR}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="DESC_TAREA">
+            <th mat-header-cell *matHeaderCellDef> TAREA </th>
+            <td mat-cell *matCellDef="let element"> {{element.DESC_TAREA}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="HORAS_EJECUTADAS">
+            <th mat-header-cell *matHeaderCellDef> HORAS EJECUTADAS </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="{'positive' : element.HORAS_EJECUTADAS < element.HORA_ESTIMADA, 'negative' : element.HORAS_EJECUTADAS > element.HORA_ESTIMADA}">
+                {{element.HORAS_EJECUTADAS}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="HORAS_ESTIMADAS">
+            <th mat-header-cell *matHeaderCellDef> HORAS ESTIMADAS </th>
+            <td mat-cell *matCellDef="let element"> {{element.HORA_ESTIMADA}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="OPCIONES">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+
+                <button mat-icon-button (click)="openDialogView(element)" color="primary" matTooltip="Ver ejecuciones">
+                    <mat-icon>
+                        visibility
+                    </mat-icon>
+                </button>
+
+                <button mat-icon-button (click)="openDialog(element)" color="primary" matTooltip="Añadir ejecución">
+                    <mat-icon>
+                        add_circle
+                    </mat-icon>
+                </button>
+
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<br>
+<br>
+<div style="float: left;">
+    <button mat-fab id="crear" (click)="openDialogEjecucion()" color="primary">Crear Ejecucion</button>
+</div>
+<div style="float: right">
+    <app-dialogo-registrar-tarea></app-dialogo-registrar-tarea>
+</div>

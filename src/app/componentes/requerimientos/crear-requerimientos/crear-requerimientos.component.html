@@ -1,0 +1,74 @@
+<h2 mat-dialog-title>Registrar Tipo de Atencion</h2>    
+<mat-dialog-content class="example-container">
+    <form class="recursoForm" [formGroup]="consultorForm">
+    <mat-form-field>
+        <mat-select placeholder="Elige el Proyecto" formControlName="proyectoN" required >
+            <mat-option *ngFor="let proyectos of listaProyectos" [value]="proyectos.ID_PROYECTO" (click)="lineasProyecto(proyectos.ID_PROYECTO)"  >
+                {{proyectos.NOMBRE_PROYECTO}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;                      
+    <mat-form-field>
+         <mat-select placeholder="Elige linea de servicio" formControlName="lineaN" required >
+            <mat-option *ngFor="let linea_servicio of linProyecto" [value]="linea_servicio.NOMBRE_LINEA" (click)="aplicacionesLneasP(linea_servicio.ID_LINEA_SERVICIO)">
+                 {{linea_servicio.NOMBRE_LINEA}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+   
+    <mat-form-field>
+         <mat-select placeholder="Elige aplicacion" width="'60%'" formControlName="aplicacionN" required #seleccion>
+            <mat-option *ngFor="let aplicacion of aplicacionP" [value]="aplicacion.ID_APLICACION">
+                {{aplicacion.APLICACION}}
+            </mat-option>
+         </mat-select>
+       
+        
+     </mat-form-field>
+     
+     <mat-dialog-actions> 
+        <button mat-raised-button (click)= 'registrarApp()' >crear aplicacion </button>
+     </mat-dialog-actions> 
+    <br>
+     <mat-form-field>
+        <mat-select placeholder="Tipo de atencion" formControlName="tipo_atencion" required #seleccion2>
+            <mat-option value="Requerimiento">Requerimiento</mat-option>
+            <mat-option value="Soporte">Soporte</mat-option>
+            <mat-option value="Incidencia">Incidencias</mat-option>
+            <mat-option value="Defectos">Defectos</mat-option>
+        </mat-select>
+    </mat-form-field>    
+    &nbsp;&nbsp;             
+    <mat-form-field>
+        <input matInput placeholder="Id cliente" formControlName="id_cliente_atencion" required >
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput placeholder="titulo" formControlName="titulo_atencion" required >
+    </mat-form-field>
+    &nbsp;&nbsp; 
+    <mat-form-field>
+        <textarea matInput placeholder="descripcion" formControlName="descripcion_atencion" required ></textarea>
+    </mat-form-field>
+    <br>   
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Fecha esperada" formControlName="fechaEsp" required #fecha1 >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+     
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker2" placeholder="fecha acordada" formControlName="fecha2" required #fecha2 > 
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    </form>
+</mat-dialog-content>        
+
+    <mat-dialog-actions>            
+        <button mat-raised-button [disabled] ="!consultorForm.valid" (click)= 'registrarAtencion(fecha1,fecha2, seleccion, seleccion2)'>Registrar</button>
+        <button mat-raised-button (click)= 'close()'>Cancelar</button>
+       
+    </mat-dialog-actions>
+

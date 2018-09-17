@@ -1,0 +1,10 @@
+button {
+    width: 100px;
+    height: 100px;
+}
+
+#crear {
+    position: fixed;
+    bottom: 40px;
+    left: 210px;
+}

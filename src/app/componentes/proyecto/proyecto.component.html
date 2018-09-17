@@ -1,0 +1,61 @@
+<div class="container">
+    <h1 class="text-center">Proyectos</h1>
+</div>
+
+<div style="width: 80%;text-align: rigt;margin-left:10%">
+    <mat-form-field class="filtro">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div *ngIf="yaCargo()" class="container">
+    <button class="crear" mat-fab id="crear" (click)="openDialog()" color="primary">Crear Proyecto</button>
+    <table mat-table [dataSource]="api.dataSource" matSort class="mat-elevation-z8">
+
+        <!-- ID del proyecto -->
+        <ng-container matColumnDef="ID_PROYECTO">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> WI </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID_PROYECTO}} </td>
+        </ng-container>
+
+        <!-- Cliente asociado al proyecto-->
+        <ng-container matColumnDef="ID_CLIENTE_PROYECTO">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> CLIENTE </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID_CLIENTE_PROYECTO}} </td>
+        </ng-container>
+
+        <!-- Nombre del proyecto -->
+        <ng-container matColumnDef="NOMBRE_PROYECTO">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+            <td mat-cell *matCellDef="let element">{{element.NOMBRE_PROYECTO}}</td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <ng-container matColumnDef="OPCIONES">
+            <th mat-header-cell *matHeaderCellDef> Opciones </th>
+            <td mat-cell *matCellDef="let element">
+                <button *ngIf="!login.soyGerente()" matTooltip="Editar" mat-icon-button (click)="openDialogActualizar(element.ID_PROYECTO,element.ID_CLIENTE_PROYECTO,element.NOMBRE_PROYECTO)"
+                    color="primary">
+                    <mat-icon>
+                        edit
+                    </mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="LINEAS">
+            <th mat-header-cell *matHeaderCellDef>Líneas </th>
+            <td mat-cell *matCellDef="let element">
+                <app-ver-lineas-dialog [proyecto]="element" *ngIf="!login.soyGerente()"></app-ver-lineas-dialog>
+            </td>
+        </ng-container>
+    </table>
+    <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<div *ngIf="!yaCargo()">
+    <mat-spinner class="centrar"></mat-spinner>
+</div>

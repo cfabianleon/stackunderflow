@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>Registrar Tarea</h2>    
+<mat-dialog-content class="example-container">
+    <form class = "tareaForm" [formGroup] = "tareaForm">
+        <mat-form-field>
+                <mat-select placeholder="Elige Consultor" formControlName="idConsultor" required #consultor>
+                        <div *ngIf="rol=='GERENTE';else other">
+                                <mat-option *ngFor="let consultores of consultores" [value]="consultores.ID_CONSULTOR">
+                                        {{consultores.ID_CONSULTOR}}, {{consultores.NOMBRE_CONSULTOR}}
+                                </mat-option>
+                        </div>
+                        <ng-template #other>
+                                <mat-option [value]="idco">
+                                        {{idco}}. {{nombre}}
+                                </mat-option>
+                        </ng-template>
+                    
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Elige el Proyecto" formControlName="proyectoN" required >
+                    <mat-option *ngFor="let proyectos of listaProyectos" [value]="proyectos.ID_PROYECTO" (click)="obtenerRequerimientosPorProyecto(proyectos.ID_PROYECTO)"  >
+                        {{proyectos.NOMBRE_PROYECTO}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select placeholder="Elige requerimiento" formControlName="idAtencion" required #requerimiento>
+                    <mat-option *ngFor="let requerimientos of requerimientos" [value]="requerimientos.ID_ATENCION">
+                        {{requerimientos.ID_ATENCION}}. {{requerimientos.TITULO_ATENCION}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Horas estimadas" formControlName="horasEst" required #horasEstimadas>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Descripcion" formControlName="desc" required #Descripcion>
+        </mat-form-field>
+        
+        
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha esperada" formControlName="fechaEsp" required #FechaEsperada>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </form>
+ </mat-dialog-content>        
+
+ <mat-dialog-actions>            
+    <button mat-raised-button [disabled]="!tareaForm.valid" (click)= 'registrarTarea(consultor, requerimiento, horasEstimadas, Descripcion, FechaEsperada)'>Registrar</button>
+    <button mat-raised-button (click)= 'close()'>Cancelar</button>
+</mat-dialog-actions>
+
